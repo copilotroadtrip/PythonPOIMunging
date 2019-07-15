@@ -125,24 +125,24 @@ class LatLngSearchTree:
             buffers = self. generate_buffer_dict(lat, buffer)
         else:
             buffers = buffer
-        print(node.split_value, node.split_name, buffers['lat'])
-        print(node.split_value + buffers['lat'], node.split_value - buffers['lat'])
+        # print(node.split_value, node.split_name, buffers['lat'])
+        # print(node.split_value + buffers['lat'], node.split_value - buffers['lat'])
 
         if node.split_name[-3:] == "Lat":
             if self.within_buffer(node.split_value, buffers['lat'], lat):
-                print("both")
+                # print("both")
                 # print(str([*self.search(lat,lng, buffers, node.left_child), *self.search(lat,lng, buffers, node.right_child)]))
-                print("------------")
+                # print("------------")
                 return [*self.search(lat,lng, buffers, node.left_child), *self.search(lat,lng, buffers, node.right_child)]
             elif lat <= node.split_value:
-                print("left")
+                # print("left")
                 # print(str([*self.search(lat,lng, buffers, node.left_child)]))
-                print("-------------")
+                # print("-------------")
                 return [*self.search(lat,lng, buffers, node.left_child)]
             else:
-                print("right")
+                # print("right")
                 # print(str([*self.search(lat,lng, buffers, node.right_child)]))
-                print("-----------")
+                # print("-----------")
                 return [*self.search(lat,lng, buffers, node.right_child)]
         else:
             if self.within_buffer(node.split_value, buffers['lng'], lng):

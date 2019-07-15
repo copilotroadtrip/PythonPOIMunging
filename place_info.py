@@ -29,6 +29,13 @@ class PlaceInfo:
             except:
                 return 0
 
+    def state_lookup(self):
+        codes = pd.read_csv("fips_codes.csv", encoding = "ISO-8859-1")
+        toReturn = {}
+        for idx in codes.index:
+            toReturn[codes.loc[idx,'st']] = codes.loc[idx, 'stusps']
+        return toReturn
+
     def __build_shape_table__(self, shape_records):
 
         """
@@ -50,6 +57,7 @@ class PlaceInfo:
         14 : INTPTLAT - Latitude of internal point
         15 : INTPTLON - Longitude of internal point
         """
+        fips_lookup = self.state_lookup()
 
         parsed = []
         for record in shape_records:
@@ -64,7 +72,8 @@ class PlaceInfo:
                     "name": info[4],
                     "total_area": int(info[-3]) + int(info[-4]),
                     "land_area": int(info[-4]),
-                    "points": points
+                    "points": points,
+                    "state": fips_lookup[int(info[0])]
                 }
 
                 to_add["NELng"], to_add["NELat"] = np.apply_along_axis(max, 0, points)
